@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui" xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<h:outputStylesheet name="headerStyle.css" library="css" />
+	<title>Awesome People</title>
+</h:head>
+<body>
+	<ui:composition>
+		<b:navBar brand="AweSome" brandHref="/awesome-0.0.1-SNAPSHOT/userMain.xhtml" inverse="true" fixed="top">
+			<b:navbarLinks>
+				<b:dropMenu value="Dropdown">
+					<b:navLink rendered="#{!login.loggedIn}" value="SignUp"
+						href="/awesome-0.0.1-SNAPSHOT/user/signUpPage.xhtml"></b:navLink>
+					<b:navLink value="Main Page"
+						href="/awesome-0.0.1-SNAPSHOT/userMain.xhtml"></b:navLink>
+						<b:navLink value="Map"
+						href="/awesome-0.0.1-SNAPSHOT/mapPage.xhtml"></b:navLink>
+					<b:navLink></b:navLink>
+					<b:navLink header="Thanks :)"></b:navLink>
+				</b:dropMenu>
+			</b:navbarLinks>
+			<h:form styleClass="navbar-form navbar-right"
+				rendered="#{!login.loggedIn}">
+				<div class="form-group">
+					<b:inputText rendered="true" placeholder="Email"
+						value="#{credentials.userName}" fieldSize="sm" />
+					<!--input type="text" class="form-control" placeholder="Search"/-->
+				</div>
+				<div class="form-group">
+					<b:inputSecret placeholder="Password"
+						value="#{credentials.password}" fieldSize="sm" />
+				</div>
+				<b:commandButton rendered="#{!login.loggedIn}" icon-awesome="fa-sign-in"
+					action="#{login.login()}" value="Sign in" look="success"
+					iconAlign="right" size="sm" />
+				<h:outputText value=" or " style="color: gray; font-weight:bold"/> 
+				<b:commandButton value="Sign up" look="info" icon-awesome="fa-user-plus"
+				 	iconAlign="right" size="sm" action="#{login.redirectSignPage()}" ajax="true"/>
+			</h:form>
+			<b:dropButton look="info" styleClass="navbar-form navbar-right"
+				value="#{login.currentUser.userName}" rendered="#{login.loggedIn}">
+				<h:form rendered="#{login.loggedIn}">
+					<b:navCommandLink styleClass="navbar-form"
+						action="#{login.logout()}" value="Logout"></b:navCommandLink>
+				</h:form>
+			</b:dropButton>
+
+		</b:navBar>
+		<b:growl id="growlMsg" globalOnly="true" placementFrom="top"
+			show-detail="true" show-summary="true" allowDismiss="true"
+			delay="3000" escape="true" />
+	</ui:composition>
+
+</body>
+</html>

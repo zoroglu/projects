@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<head>
+<title>Simple Map</title>
+   
+<link rel="stylesheet"
+	href="https://openlayers.org/en/v4.4.2/css/ol.css" type="text/css"></link>
+<!-- The line below is only needed for old environments like Internet Explorer and Android 4.x -->
+<script
+	src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL"></script>
+<script src="https://openlayers.org/en/v4.4.2/build/ol.js"></script>
+<script type="text/javascript">
+        window.onload = function() {
+        	 var map = new ol.Map({
+        	        layers: [
+        	          new ol.layer.Tile({
+        	            source: new ol.source.OSM()
+        	          })
+        	        ],
+        	        target: 'map',
+        	        view: new ol.View({
+        	          center: [-10324, 24324],
+        	          zoom: 1
+        	        })
+        	      });
+        };
+    </script>
+</head>
+<body>
+				<div style="width:100%; min-height:100%" id="map" position="fixed"></div>
+
+</body>
+</html>

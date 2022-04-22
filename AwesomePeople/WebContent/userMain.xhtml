@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:b="http://bootsfaces.net/ui" 
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Kaydol</title>
+</h:head>
+<h:body>
+<ui:composition template="templates/template.xhtml">
+<ui:define name="content">
+	<b:container layout="fluid">
+	<b:row>
+		<h3>Hoşgeldiniz</h3>
+	<h:outputText value=" Giriş yapınız yada hesabınız yoksa dropdown menüsünden kayıt sayfasına gidebilirsiniz :)" rendered="#{!login.loggedIn}"/>
+	<h:outputText value=" - Henüz kişi kaydınız yok :(" rendered="#{baseCB.hasPerson} and #{login.loggedIn}"/>
+	<h:outputText value=" Merhaba #{baseCB.currentUser.userName} " rendered="#{login.loggedIn}"/>
+	<br />
+	<h:outputText value=" İlişkili kişi ismi : #{baseCB.currentUser.person.firstName}" rendered="#{baseCB.hasPerson}"/>
+	<h:outputText value=" , size ait bir kişi kaydınız yok görünüyor :(" rendered="#{!baseCB.hasPerson and login.loggedIn}"/>
+	</b:row>
+	</b:container>
+</ui:define>
+</ui:composition>
+</h:body>
+</html>

@@ -1,0 +1,10 @@
+--theCeo
+CREATE TABLE "aws_person"
+(
+  ID bigserial NOT NULL,
+  FIRST_NAME VARCHAR(30) NOT NULL,
+  LAST_NAME VARCHAR(30) NOT NULL,
+  CONSTRAINT person_pkey PRIMARY KEY (id)
+);
+
+CREATE SEQUENCE aws_person_id_seq START 1;

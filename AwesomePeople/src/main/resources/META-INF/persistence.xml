@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+	version="2.1">
+	       <!-- persistence-unit name: EntityManagerFactory sınıfına persistence.xml deki bilgileri 
+	       (veritabanı bağlantı bilgileri gibi) almak için kullanılır.
+	        Transaction-type_"RESOURCCE_LOCAL iste
+	         kendimiz EntitiyMAnagerFActory objesini doldurmamız gerkeiyor"  -->
+	<persistence-unit name="awesome" transaction-type="RESOURCE_LOCAL">   
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+ 		<jta-data-source>java:jboss/awesome</jta-data-source>
+		<class>com.ent.user.User</class>
+		<class>com.ent.user.Person</class>
+		<properties>
+		    <property name="hibernate.cache.use_second_level_cache" value="false"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
+			<property name="hibernate.jdbc.batch_size" value="5000" />
+			<property name="hibernate.transaction.manager_lookup_class"
+				value="org.hibernate.transaction.JBossTransactionManagerLookup" />
+			<property name="hibernate.show_sql" value="false" />
+			<property name="hibernate.format_sql" value="false" />
+			<property name="hibernate.default_batch_fetch_size" value="2" />
+			<property name="hibernate.search.default.directory_provider"
+				value="filesystem" />
+		</properties>
+	</persistence-unit>
+</persistence>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+________________________________________________________________________________________________________________________________________
+
+EntityManagerFactory kullanmak istemediğimiz zaman @PersistenceContext 
+	notasyonu kullanarak işi sunucuya devredebiliriz. Bunu yapmak için öncelikle 
+	persistence.xml içindeki transaction-type özelliğine JTA ataması yapmamız 
+	gerekiyor. Yani transaction-type="JTA" yapmamız gerekiyor, ardından EntityManager 
+	eğişkeni üzerinde şu şekilde bir tanımlama gerekecektir 
+	
+	@PersistenceContext(unitName 
+	= "oracles") private EntityManager em;
+	
+	
+	entityManagerFactory sınıfından  entitymanager sınıfını oluşturacaksak transaction-type"RESOURCE_LOCAL" olarak  belirlemeliyiz 
+
+_________________________________________________________________________________________________________
+
+<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
+
+________________________________________________________________________________________________________
+
+<provider>org.hibernate.ejb.HibernatePersistence</provider> 
+<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+bu ikisinin farkı ne ?
+
+
+__________________________________________________________________________________________________________
+
+
+ <persistence-unit name="DB1_PU">
+    <jta-data-source>java:jboss/datasources/ds1</jta-data-source>
+</persistence-unit>
+<persistence-unit name="DB2_PU">
+    <jta-data-source>java:jboss/datasources/ds2</jta-data-source>
+</persistence-unit> 
+ 
+	bir persistence.xml de birden fazla persistence-unit kullanılırsa oluşturacağımız entitymanagerfactoryde hangisini kullanacağımız dilediğimiz şekilde belirleyebilriiz
+		vaya transaction-type="JTA" ise şu şekilde belirleyebilriz  
+		@PersistenceContext(unitName = "DB1_PU")
+protected EntityManager entityManager1;
+
+@PersistenceContext(unitName = "DB2_PU")
+protected EntityManager entityManager2;   
+
+______________________________________________________________________________________________________________
+
+
+GlasshFish te standolne.xml kullanılmazken gerekli persistence.xml
+ayarları
+aşağıdaki kodlar
+
+ <?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+   http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
+	version="2.1">
+	<persistence-unit name="resul" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+		<class>com.entities.Student</class>
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@127.0.0.1:1521:xe" />
+			<property name="javax.persistence.jdbc.user" value="RZOROGLU" />
+			<property name="javax.persistence.jdbc.password" value="resul" />
+			<property name="hibernate.hbm2ddl.auto" value="create" />
+			<property name="hibernate.id.new_generator_mappings" value="true" />
+		</properties>
+	</persistence-unit>
+</persistence>
+
+
+
+_______________________________________________________________________________________________________
+standalone Oracle ayarları
+
+<datasources>
+                <datasource jta="true" jndi-name="java:jboss/awesome" pool-name="awesome" enabled="true" use-java-context="true">
+                    <connection-url>jdbc:oracle:thin:@localhost:1521:xe</connection-url>
+                    <driver>oraclesql</driver>
+                    <security>
+                        <user-name>username</user-name>
+                        <password>password</password>
+                    </security>
+                    <statement>
+                        <prepared-statement-cache-size>32</prepared-statement-cache-size>
+                        <share-prepared-statements>true</share-prepared-statements>
+                    </statement>
+                </datasource>
+                <drivers>
+                    <driver name="oraclesql" module="com.oracle">
+                        <xa-datasource-class>oracle.jdbc.OracleDriver</xa-datasource-class>
+                    </driver>
+                </drivers>
+            </datasources>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-->
+
+
+

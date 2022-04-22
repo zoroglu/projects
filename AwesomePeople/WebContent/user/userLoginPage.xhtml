@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Login Page</title>
+	<link type="text/css"
+		href="${facesContext.externalContext.requestContextPath}/resources/css/style.css"
+		rel="stylesheet" />
+	<link type="image/x-icon"
+		href="${facesContext.externalContext.requestContextPath}/resources/images/favicon.ico"
+		rel="shortcut icon" />
+</h:head>
+
+<h:body style="background-color:#7c9096;">
+	<h:form>
+		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+		<p:dialog id="dialog" header="Login" width="400" widgetVar="dlg"
+			visible="true" closable="false" draggable="false"
+			resizable="false" style="box-shadow: 7px 10px 5px #303030;">
+			
+			<h:panelGrid columns="2" cellpadding="5">
+				<h:outputLabel for="username" value="Username:" />
+				<p:inputText id="username" value="#{credentials.userName}"
+					required="true" label="username" />
+
+				<h:outputLabel for="password" value="Password:" />
+				<p:password id="password" value="#{credentials.password}"
+					required="true" label="password" />
+
+				<f:facet name="footer">
+					<h:commandButton value="Login" action="#{login.login}" />
+					
+				</f:facet>
+			</h:panelGrid>
+		</p:dialog>
+	</h:form>
+</h:body>
+</html>
